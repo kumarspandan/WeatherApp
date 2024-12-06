@@ -1,11 +1,11 @@
 import streamlit as st
 import requests
-
+import creds
 # Function to fetch weather data
 def get_weather(city_name, api_key):
     # OpenWeatherMap API URL
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-    complete_url = f"{base_url}q={city_name}&appid={api_key}&units=metric"
+    complete_url = f"{base_url}q={city_name}&appid={creds.api_key}&units=metric"
     
     try:
         # Get response from API
@@ -60,11 +60,10 @@ city_name = st.text_input("City Name", "")
 # Button to get weather data
 if st.button("Get Weather"):
     if city_name:
-        # Use your actual OpenWeatherMap API key here
-        api_key = "8b2be60768b7130d1305f292787e11df"  # <-- Replace this with your API key
         
-        # Fetch the weather data
-        weather_info = get_weather(city_name, api_key)
+        
+        
+        weather_info = get_weather(city_name, creds.api_key)
         
         # Display the result
         if weather_info:
