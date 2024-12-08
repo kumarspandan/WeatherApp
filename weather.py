@@ -1,16 +1,11 @@
 import streamlit as st
 import requests
-import creds
-#from dotenv import load_dotenv
 
-#def loadingdotenv():
-    #load_dotenv()
 # Function to fetch weather data
 def get_weather(city_name, api_key):
-    #configure()
     # OpenWeatherMap API URL
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-    complete_url = f"{base_url}q={city_name}&appid={creds.api_key}&units=metric"
+    complete_url = f"{base_url}q={city_name}&appid={api_key}&units=metric"
     
     try:
         # Get response from API
@@ -65,11 +60,9 @@ city_name = st.text_input("City Name", "")
 # Button to get weather data
 if st.button("Get Weather"):
     if city_name:
-        # Use your actual OpenWeatherMap API key here
-        #api_key = "8YOUR API KEY HERE"  # < Replace this with your API key
-        
-        # Fetch the weather data
-        weather_info = get_weather(city_name, creds.api_key)
+        # Fetch the weather data using the secret api_key
+        api_key = st.secrets["api_key"]  # Fetch API key from Streamlit Secrets
+        weather_info = get_weather(city_name, api_key)
         
         # Display the result
         if weather_info:
@@ -96,10 +89,9 @@ if st.button("Get Weather"):
     else:
         st.warning("Please enter a city name.")
 
+# Styling for the button
 st.markdown("""
     <style>
-        /* Button styling */
-        #its important to mention div.stButton bcz streamllit wraps button in div content
         div.stButton > button { 
             background-color: #4CAF50;
             color: white;
